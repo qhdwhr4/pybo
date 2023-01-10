@@ -1,29 +1,51 @@
 {% extends 'base.html' %}
 {% load pybo_filter %}
 {% block content %}
-<div class="container my-3">
+<head>
+    <style>
+    #col1 {
+        background-color : blue;
+        text-color : white;
+    }
+    h2 {
+        font-style : bold;
+    }
+    body {
+        background-color : pink;
+        }
+    #type1 {
+        color : red;
+    }
+    * {
+    font-family : Times New Roman;
+    }
+
+    </style>
+    <p></p>
+    <h2 class="text-center" style="font-family: 궁서; color: red; ">Q & A 게시판</h2>
+
+</head>
+<body>
+<div class="container my-3" >
     <div class="row justify-content-between my-3">
+        <div>
+        </div>
         <div class="col-2">
-            <select class="form-control so">
-                <option value="recent" {% if so == 'recent' %}selected{% endif %}>최신순</option>
-                <option value="recommend" {% if so == 'recommend' %}selected{% endif %}>추천순</option>
-                <option value="popular" {% if so == 'popular' %}selected{% endif %}>인기순</option>
+            <select class="form-control so ">
+                <option value="recent" {% if so == 'recent' %}selected{% endif %}>&nbsp;&nbsp;&nbsp;최신순</option>
+                <option value="recommend" {% if so == 'recommend' %}selected{% endif %}>&nbsp;&nbsp;&nbsp;추천순</option>
+                <option value="popular" {% if so == 'popular' %}selected{% endif %}>&nbsp;&nbsp;&nbsp;인기순</option>
             </select>
         </div>
-        <div class="col-4 input-group">
-            <input type="text" class="form-control kw" value="{{ kw|default_if_none:'' }}">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
-            </div>
-        </div>
+
     </div>
     <table class="table">
-        <thead>
-        <tr class="text-center thead-dark">
+        <thead >
+        <tr class=" text-center thead-light">
             <th>번호</th>
             <th>추천</th>
-            <th style="width:50%">제목</th>
-            <th>글쓴이</th>
+            <th style="width:50%">문의 내용</th>
+            <th>작성자</th>
             <th>작성일시</th>
         </tr>
         </thead>
@@ -41,7 +63,7 @@
                 {% endif %}
             </td>
             <td class="text-left">
-                <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a>
+                <a href="{% url 'pybo:detail' question.id %}" >{{ question.subject }}</a>
                 {% if question.answer_set.count > 0 %}
                 <span class="text-danger small ml-2">{{ question.answer_set.count }}</span>
                 {% endif %}
@@ -95,8 +117,19 @@
         {% endif %}
     </ul>
     <!-- 페이징처리 끝 -->
+    <div class="container my-3" >
+        <div class="row justify-content-between my-3">
     <a href="{% url 'pybo:question_create' %}" class="btn btn-primary">질문 등록하기</a>
+            <div class="col-4 input-group">
+            <input type="text" class="form-control kw" value="{{ kw|default_if_none:'' }}">
+            <div class="input-group-append">
+                <button id="col1"class="btn btn-outline-secondary " type="button" id="btn_search">찾기</button>
+            </div>
+        </div>
+            </div>
+        </div>
 </div>
+</body>
 <form id="searchForm" method="get" action="{% url 'index' %}">
     <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
     <input type="hidden" id="page" name="page" value="{{ page }}">
