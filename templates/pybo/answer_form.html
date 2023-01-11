@@ -1,6 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<head>
+    <style>
+    body {
+        background-color : Turquoise;
+        }
+
+    * {
+    font-family : Times New Roman;
+    }
+    </style>
+</head>
 <div class="container my-3">
     <form method="post">
         {% csrf_token %}
